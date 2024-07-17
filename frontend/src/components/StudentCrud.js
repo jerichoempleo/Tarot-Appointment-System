@@ -85,7 +85,7 @@ const [students, setUsers] = useState([]);
 
     return (
       <div>
-        <h1>Student Detailsaaaaaaaaaaaaaaa</h1>
+        <h1>Student Details</h1>
       <div class="container mt-4">
         <form>
           <div class="form-group">
