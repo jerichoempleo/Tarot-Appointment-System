@@ -23,7 +23,7 @@ namespace React_Asp.Controllers
         }
 
         [HttpPost]
-        [Route("AddStudentsasa")]
+        [Route("AddStudent")]
         public async Task<Student> AddStudent(Student objStudent)
         {
             _appDbContext.Student.Add(objStudent);
