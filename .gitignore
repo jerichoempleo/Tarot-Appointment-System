@@ -1,11 +1,9 @@
 
 *.vsidx
 backend/.vs/Backend/v17/.suo
-*.json
 *.dll
 *.exe
 *.pdb
-*.json
 *.exe
 *.cs
 *.cache
@@ -14,12 +12,9 @@ backend/.vs/Backend/v17/.suo
 *.cache
 *.pdb
 *.cache
-*.json
 *.dll
 *.v2
 backend/.vs/Backend/v17/.suo
-*.json
 *.bin
 *.vsidx
 /backend/.vs/Backend/v17
-*.json
