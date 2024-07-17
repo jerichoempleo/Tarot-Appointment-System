@@ -16,3 +16,7 @@ backend/.vs/Backend/v17/.suo
 *.cache
 *.json
 *.dll
+*.v2
+backend/.vs/Backend/v17/.suo
+*.json
+*.bin
