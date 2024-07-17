@@ -42,3 +42,13 @@ backend/.vs/Backend/v17/.suo
 *.pdb
 *.json
 *.dll
+*.dll
+*.exe
+*.pdb
+*.exe
+*.cs
+*.cache
+*.dll
+*.pdb
+*.json
+*.dll
