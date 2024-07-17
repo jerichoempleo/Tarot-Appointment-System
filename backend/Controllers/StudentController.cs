@@ -16,7 +16,7 @@ namespace React_Asp.Controllers
         }
 
         [HttpGet]
-        [Route("GetStudentaaaaaaaa")]
+        [Route("GetStudent")]
         public async Task<IEnumerable<Student>> GetStudents()
         {
             return await _appDbContext.Student.ToListAsync();
