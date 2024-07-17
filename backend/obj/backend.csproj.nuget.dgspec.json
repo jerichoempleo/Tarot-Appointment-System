@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\backend.csproj": {}
+    "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\backend.csproj": {
+    "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\backend.csproj",
+        "projectPath": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\backend.csproj",
         "packagesPath": "C:\\Users\\emple\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\obj\\",
+        "outputPath": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\emple\\AppData\\Roaming\\NuGet\\NuGet.Config",

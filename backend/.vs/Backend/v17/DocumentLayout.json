@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\",
+  "WorkspaceRootPath": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{06A0124C-0B3F-40AC-9B95-2AB0EE0D0577}|backend.csproj|c:\\users\\emple\\desktop\\bsit\\csharp\\tarotappointmentsystem\\backend\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{06A0124C-0B3F-40AC-9B95-2AB0EE0D0577}|backend.csproj|c:\\users\\emple\\desktop\\bsit\\csharp\\tarot-appointment-system\\backend\\controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06A0124C-0B3F-40AC-9B95-2AB0EE0D0577}|backend.csproj|solutionrelative:controllers\\studentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{06A0124C-0B3F-40AC-9B95-2AB0EE0D0577}|backend.csproj|c:\\users\\emple\\desktop\\bsit\\csharp\\tarotappointmentsystem\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{06A0124C-0B3F-40AC-9B95-2AB0EE0D0577}|backend.csproj|c:\\users\\emple\\desktop\\bsit\\csharp\\tarot-appointment-system\\backend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{06A0124C-0B3F-40AC-9B95-2AB0EE0D0577}|backend.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -24,9 +24,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "StudentController.cs",
-              "DocumentMoniker": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\Controllers\\StudentController.cs",
+              "DocumentMoniker": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\Controllers\\StudentController.cs",
               "RelativeDocumentMoniker": "Controllers\\StudentController.cs",
-              "ToolTip": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\Controllers\\StudentController.cs",
+              "ToolTip": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\Controllers\\StudentController.cs",
               "RelativeToolTip": "Controllers\\StudentController.cs",
               "ViewState": "AQIAAA0AAAAAAAAAAAAuwBkAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -37,9 +37,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\Program.cs",
+              "DocumentMoniker": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\TarotAppointmentSystem\\backend\\Program.cs",
+              "ToolTip": "C:\\Users\\emple\\Desktop\\BSIT\\CSharp\\Tarot-Appointment-System\\backend\\Program.cs",
               "RelativeToolTip": "Program.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
