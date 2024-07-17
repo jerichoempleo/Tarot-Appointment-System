@@ -20,3 +20,4 @@ backend/.vs/Backend/v17/.suo
 backend/.vs/Backend/v17/.suo
 *.json
 *.bin
+*.vsidx
