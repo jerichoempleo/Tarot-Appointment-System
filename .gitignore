@@ -5,7 +5,6 @@ backend/.vs/Backend/v17/.suo
 *.exe
 *.pdb
 *.exe
-*.cs
 *.cache
 *.dll
 *.editorconfig
@@ -36,7 +35,6 @@ backend/.vs/Backend/v17/.suo
 *.exe
 *.pdb
 *.exe
-*.cs
 *.cache
 *.dll
 *.pdb
@@ -46,7 +44,6 @@ backend/.vs/Backend/v17/.suo
 *.exe
 *.pdb
 *.exe
-*.cs
 *.cache
 *.dll
 *.pdb
