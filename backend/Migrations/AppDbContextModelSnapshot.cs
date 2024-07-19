@@ -8,7 +8,7 @@ using TarotAppointment.Models;
 
 #nullable disable
 
-namespace React_Asp.Migrations
+namespace TarotAppointment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -63,15 +63,25 @@ namespace React_Asp.Migrations
                     b.Property<int>("client_id")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("date_appointment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("number_slots")
+                    b.Property<int>("service_id")
                         .HasColumnType("int");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.Property<string>("time_slot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("appointment_id");
 
                     b.HasIndex("client_id");
+
+                    b.HasIndex("service_id");
 
                     b.ToTable("Appointments");
                 });
@@ -104,6 +114,71 @@ namespace React_Asp.Migrations
                     b.HasKey("client_id");
 
                     b.ToTable("Clients");
+                });
+
+            modelBuilder.Entity("TarotAppointment.Models.Message", b =>
+                {
+                    b.Property<int>("message_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("message_id"));
+
+                    b.Property<int>("admin_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("client_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("message_id");
+
+                    b.HasIndex("admin_id");
+
+                    b.HasIndex("client_id");
+
+                    b.ToTable("Message");
+                });
+
+            modelBuilder.Entity("TarotAppointment.Models.Notification", b =>
+                {
+                    b.Property<int>("notification_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("notification_id"));
+
+                    b.Property<int>("admin_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("appointment_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("client_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("notification_id");
+
+                    b.HasIndex("admin_id");
+
+                    b.HasIndex("appointment_id");
+
+                    b.HasIndex("client_id");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("TarotAppointment.Models.Schedule", b =>
@@ -141,6 +216,9 @@ namespace React_Asp.Migrations
                     b.Property<int>("admin_id")
                         .HasColumnType("int");
 
+                    b.Property<int>("appointment_id")
+                        .HasColumnType("int");
+
                     b.Property<string>("description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -156,6 +234,8 @@ namespace React_Asp.Migrations
                     b.HasKey("service_id");
 
                     b.HasIndex("admin_id");
+
+                    b.HasIndex("appointment_id");
 
                     b.ToTable("Services");
                 });
@@ -186,8 +266,57 @@ namespace React_Asp.Migrations
                     b.HasOne("TarotAppointment.Models.Client", "Client")
                         .WithMany("Appointments")
                         .HasForeignKey("client_id")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("TarotAppointment.Models.Service", "Service")
+                        .WithMany("Appointments")
+                        .HasForeignKey("service_id")
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Service");
+                });
+
+            modelBuilder.Entity("TarotAppointment.Models.Message", b =>
+                {
+                    b.HasOne("TarotAppointment.Models.Admin", "Admin")
+                        .WithMany("Messages")
+                        .HasForeignKey("admin_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TarotAppointment.Models.Client", "Client")
+                        .WithMany("Messages")
+                        .HasForeignKey("client_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("Client");
+                });
+
+            modelBuilder.Entity("TarotAppointment.Models.Notification", b =>
+                {
+                    b.HasOne("TarotAppointment.Models.Admin", "Admin")
+                        .WithMany("Notifications")
+                        .HasForeignKey("admin_id")
+                        .IsRequired();
+
+                    b.HasOne("TarotAppointment.Models.Appointment", "Appointment")
+                        .WithMany("Notifications")
+                        .HasForeignKey("appointment_id")
+                        .IsRequired();
+
+                    b.HasOne("TarotAppointment.Models.Client", "Client")
+                        .WithMany("Notifications")
+                        .HasForeignKey("client_id")
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("Appointment");
 
                     b.Navigation("Client");
                 });
@@ -197,7 +326,7 @@ namespace React_Asp.Migrations
                     b.HasOne("TarotAppointment.Models.Admin", "Admin")
                         .WithMany("Schedules")
                         .HasForeignKey("admin_id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Admin");
@@ -208,20 +337,46 @@ namespace React_Asp.Migrations
                     b.HasOne("TarotAppointment.Models.Admin", "Admin")
                         .WithMany("Services")
                         .HasForeignKey("admin_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TarotAppointment.Models.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("appointment_id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Admin");
+
+                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("TarotAppointment.Models.Admin", b =>
                 {
+                    b.Navigation("Messages");
+
+                    b.Navigation("Notifications");
+
                     b.Navigation("Schedules");
 
                     b.Navigation("Services");
                 });
 
+            modelBuilder.Entity("TarotAppointment.Models.Appointment", b =>
+                {
+                    b.Navigation("Notifications");
+                });
+
             modelBuilder.Entity("TarotAppointment.Models.Client", b =>
+                {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("Messages");
+
+                    b.Navigation("Notifications");
+                });
+
+            modelBuilder.Entity("TarotAppointment.Models.Service", b =>
                 {
                     b.Navigation("Appointments");
                 });

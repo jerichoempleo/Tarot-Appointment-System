@@ -22,7 +22,9 @@ namespace TarotAppointment.Models
         [StringLength(100, MinimumLength = 6, ErrorMessage = "The password must be at least 6 characters long.")]
         public string password { get; set; }
 
-        // Navigation property
+        //Code for connecting in the AppDbContext Foreign Keys
         public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Message> Messages { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
     }
 }

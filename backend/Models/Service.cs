@@ -16,5 +16,10 @@ namespace TarotAppointment.Models
 
         // Need neto for connecting it to another table
         public Admin Admin { get; set; }
+
+        public Appointment Appointment { get; set; }
+
+        //Code for connecting in the AppDbContext Foreign Keys
+        public ICollection<Appointment> Appointments { get; set; }
     }
 }
