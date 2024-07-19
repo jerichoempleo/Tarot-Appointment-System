@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using React_Asp.Models;
+using TarotAppointment.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

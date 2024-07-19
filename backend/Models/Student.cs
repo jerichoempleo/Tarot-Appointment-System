@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace React_Asp.Models
+namespace TarotAppointment.Models
 {
     public class Student
     {

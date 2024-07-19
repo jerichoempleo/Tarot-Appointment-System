@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using React_Asp.Models;
+using TarotAppointment.Models;
 
-namespace React_Asp.Controllers
+namespace TarotAppointment.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
