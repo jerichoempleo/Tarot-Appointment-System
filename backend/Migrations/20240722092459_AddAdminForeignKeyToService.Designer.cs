@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TarotAppointment.Models;
 
@@ -11,9 +12,11 @@ using TarotAppointment.Models;
 namespace TarotAppointment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240722092459_AddAdminForeignKeyToService")]
+    partial class AddAdminForeignKeyToService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -261,7 +264,7 @@ namespace TarotAppointment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("appointment_id"));
 
-                    b.Property<int?>("client_id")
+                    b.Property<int>("client_id")
                         .HasColumnType("int");
 
                     b.Property<string>("date_appointment")
@@ -278,17 +281,11 @@ namespace TarotAppointment.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("appointment_id");
 
                     b.HasIndex("client_id");
 
                     b.HasIndex("service_id");
-
-                    b.HasIndex("user_id");
 
                     b.ToTable("Appointments");
                 });
@@ -331,10 +328,10 @@ namespace TarotAppointment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("message_id"));
 
-                    b.Property<int?>("admin_id")
+                    b.Property<int>("admin_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("client_id")
+                    b.Property<int>("client_id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("date")
@@ -344,17 +341,11 @@ namespace TarotAppointment.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("message_id");
 
                     b.HasIndex("admin_id");
 
                     b.HasIndex("client_id");
-
-                    b.HasIndex("user_id");
 
                     b.ToTable("Message");
                 });
@@ -367,13 +358,13 @@ namespace TarotAppointment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("notification_id"));
 
-                    b.Property<int?>("admin_id")
+                    b.Property<int>("admin_id")
                         .HasColumnType("int");
 
                     b.Property<int>("appointment_id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("client_id")
+                    b.Property<int>("client_id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("date")
@@ -383,10 +374,6 @@ namespace TarotAppointment.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("notification_id");
 
                     b.HasIndex("admin_id");
@@ -394,8 +381,6 @@ namespace TarotAppointment.Migrations
                     b.HasIndex("appointment_id");
 
                     b.HasIndex("client_id");
-
-                    b.HasIndex("user_id");
 
                     b.ToTable("Notifications");
                 });
@@ -408,7 +393,7 @@ namespace TarotAppointment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("schedule_id"));
 
-                    b.Property<int?>("admin_id")
+                    b.Property<int>("admin_id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("date")
@@ -417,15 +402,9 @@ namespace TarotAppointment.Migrations
                     b.Property<int>("number_slots")
                         .HasColumnType("int");
 
-                    b.Property<string>("user_id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("schedule_id");
 
                     b.HasIndex("admin_id");
-
-                    b.HasIndex("user_id");
 
                     b.ToTable("Schedules");
                 });
@@ -545,82 +524,73 @@ namespace TarotAppointment.Migrations
 
             modelBuilder.Entity("TarotAppointment.Models.Appointment", b =>
                 {
-                    b.HasOne("TarotAppointment.Models.Client", null)
+                    b.HasOne("TarotAppointment.Models.Client", "Client")
                         .WithMany("Appointments")
-                        .HasForeignKey("client_id");
+                        .HasForeignKey("client_id")
+                        .IsRequired();
 
                     b.HasOne("TarotAppointment.Models.Service", "Service")
                         .WithMany("Appointments")
                         .HasForeignKey("service_id")
                         .IsRequired();
 
-                    b.HasOne("TarotAppointment.Models.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("user_id")
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
+                    b.Navigation("Client");
 
                     b.Navigation("Service");
                 });
 
             modelBuilder.Entity("TarotAppointment.Models.Message", b =>
                 {
-                    b.HasOne("TarotAppointment.Models.Admin", null)
+                    b.HasOne("TarotAppointment.Models.Admin", "Admin")
                         .WithMany("Messages")
-                        .HasForeignKey("admin_id");
-
-                    b.HasOne("TarotAppointment.Models.Client", null)
-                        .WithMany("Messages")
-                        .HasForeignKey("client_id");
-
-                    b.HasOne("TarotAppointment.Models.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("user_id")
+                        .HasForeignKey("admin_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("AppUser");
+                    b.HasOne("TarotAppointment.Models.Client", "Client")
+                        .WithMany("Messages")
+                        .HasForeignKey("client_id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("TarotAppointment.Models.Notification", b =>
                 {
-                    b.HasOne("TarotAppointment.Models.Admin", null)
+                    b.HasOne("TarotAppointment.Models.Admin", "Admin")
                         .WithMany("Notifications")
-                        .HasForeignKey("admin_id");
+                        .HasForeignKey("admin_id")
+                        .IsRequired();
 
                     b.HasOne("TarotAppointment.Models.Appointment", "Appointment")
                         .WithMany("Notifications")
                         .HasForeignKey("appointment_id")
                         .IsRequired();
 
-                    b.HasOne("TarotAppointment.Models.Client", null)
+                    b.HasOne("TarotAppointment.Models.Client", "Client")
                         .WithMany("Notifications")
-                        .HasForeignKey("client_id");
-
-                    b.HasOne("TarotAppointment.Models.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("user_id")
+                        .HasForeignKey("client_id")
                         .IsRequired();
 
-                    b.Navigation("AppUser");
+                    b.Navigation("Admin");
 
                     b.Navigation("Appointment");
+
+                    b.Navigation("Client");
                 });
 
             modelBuilder.Entity("TarotAppointment.Models.Schedule", b =>
                 {
-                    b.HasOne("TarotAppointment.Models.Admin", null)
+                    b.HasOne("TarotAppointment.Models.Admin", "Admin")
                         .WithMany("Schedules")
-                        .HasForeignKey("admin_id");
-
-                    b.HasOne("TarotAppointment.Models.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("user_id")
+                        .HasForeignKey("admin_id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("AppUser");
+                    b.Navigation("Admin");
                 });
 
             modelBuilder.Entity("TarotAppointment.Models.Service", b =>

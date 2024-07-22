@@ -7,8 +7,9 @@ namespace TarotAppointment.Models
     {
         [Key]
         public int appointment_id { get; set; }
-        [ForeignKey("Client")]
-        public int client_id { get; set; }
+          // Foreign key to AppUser (aspnetusers table)
+        [ForeignKey("AppUser")]
+        public string user_id { get; set; }
         [ForeignKey("Service")]
         public int service_id { get; set; }
         public string date_appointment { get; set; }
@@ -17,7 +18,9 @@ namespace TarotAppointment.Models
 
 
         // Need neto for connecting it to another table
-        public Client Client { get; set; }
+        //public Client Client { get; set; }
+
+        public AppUser AppUser { get; set; }
         public Service Service { get; set; }
 
         //Code for connecting in the AppDbContext Foreign Keys

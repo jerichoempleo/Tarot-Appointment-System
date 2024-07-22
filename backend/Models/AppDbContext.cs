@@ -27,42 +27,31 @@ namespace TarotAppointment.Models
 
             // Services
             modelBuilder.Entity<Service>()
-                .HasOne(s => s.Admin)
-                .WithMany(a => a.Services)
-                .HasForeignKey(s => s.admin_id)
+                .HasOne(s => s.AppUser)
+                .WithMany()
+                .HasForeignKey(s => s.user_id)
                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
             // Schedule
             modelBuilder.Entity<Schedule>()
-                .HasOne(s => s.Admin)
-                .WithMany(a => a.Schedules) // If there's a red line then there's missing code in Admin.cs
-                .HasForeignKey(s => s.admin_id)
+                .HasOne(s => s.AppUser)
+                .WithMany()
+                .HasForeignKey(s => s.user_id)
                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
             // Messages
             modelBuilder.Entity<Message>()
-                .HasOne(s => s.Admin)
-                .WithMany(a => a.Messages) // If there's a red line then there's missing code in Admin.cs
-                .HasForeignKey(s => s.admin_id)
+                .HasOne(s => s.AppUser)
+                .WithMany()
+                .HasForeignKey(s => s.user_id)
                 .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
-            modelBuilder.Entity<Message>()
-                .HasOne(s => s.Client)
-                .WithMany(a => a.Messages) // If there's a red line then there's missing code in Client.cs
-                .HasForeignKey(s => s.client_id)
-                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
-
+         
             // Notification
             modelBuilder.Entity<Notification>()
-                .HasOne(s => s.Client)
-                .WithMany(a => a.Notifications) // If there's a red line then there's missing code in Client.cs
-                .HasForeignKey(s => s.client_id)
-                .OnDelete(DeleteBehavior.ClientSetNull); // I set it to ClientSetNull para mawala ung "foreign key constraint on table may cause cycles or multiple cascade paths"
-
-            modelBuilder.Entity<Notification>()
-                .HasOne(s => s.Admin)
-                .WithMany(a => a.Notifications) // If there's a red line then there's missing code in Admin.cs
-                .HasForeignKey(s => s.admin_id)
+                .HasOne(s => s.AppUser)
+                .WithMany()
+                .HasForeignKey(s => s.user_id)
                 .OnDelete(DeleteBehavior.ClientSetNull); // I set it to ClientSetNull para mawala ung "foreign key constraint on table may cause cycles or multiple cascade paths"
 
             modelBuilder.Entity<Notification>()
@@ -73,9 +62,9 @@ namespace TarotAppointment.Models
 
             // Appointment
             modelBuilder.Entity<Appointment>()
-                .HasOne(s => s.Client)
-                .WithMany(a => a.Appointments) // If there's a red line then there's missing code in Appointment.cs
-                .HasForeignKey(s => s.client_id)
+                .HasOne(s => s.AppUser)
+                .WithMany() 
+                .HasForeignKey(s => s.user_id)
                 .OnDelete(DeleteBehavior.ClientSetNull); // I set it to ClientSetNull para mawala ung "foreign key constraint on table may cause cycles or multiple cascade paths"
 
             modelBuilder.Entity<Appointment>()
