@@ -13,11 +13,12 @@ namespace TarotAppointment.Models
             //<Model Name> Database Name
             public DbSet<Student> Student { get; set; }
             public DbSet<Service> Services { get; set; }
-            public DbSet<Admin> Admins { get; set; }
+            //public DbSet<Admin> Admins { get; set; }
             public DbSet<Schedule> Schedules { get; set; }
-            public DbSet<Client> Clients { get; set; }
+            //public DbSet<Client> Clients { get; set; }
             public DbSet<Appointment> Appointments { get; set; }
             public DbSet<Notification> Notifications { get; set; }
+
         //Adding a foreign key
         protected override void OnModelCreating(ModelBuilder modelBuilder)
             {
@@ -67,11 +68,11 @@ namespace TarotAppointment.Models
                 .HasForeignKey(s => s.user_id)
                 .OnDelete(DeleteBehavior.ClientSetNull); // I set it to ClientSetNull para mawala ung "foreign key constraint on table may cause cycles or multiple cascade paths"
 
-            modelBuilder.Entity<Appointment>()
-                .HasOne(s => s.Service)
-                .WithMany(a => a.Appointments) // If there's a red line then there's missing code in Appointment.cs
-                .HasForeignKey(s => s.service_id)
-                .OnDelete(DeleteBehavior.ClientSetNull); // I set it to ClientSetNull para mawala ung "foreign key constraint on table may cause cycles or multiple cascade paths"
+            //modelBuilder.Entity<Appointment>()
+            //    .HasOne(s => s.Service)
+            //    .WithMany(a => a.Appointments) // If there's a red line then there's missing code in Appointment.cs
+            //    .HasForeignKey(s => s.service_id)
+            //    .OnDelete(DeleteBehavior.ClientSetNull); // I set it to ClientSetNull para mawala ung "foreign key constraint on table may cause cycles or multiple cascade paths"
         }
 
     }
