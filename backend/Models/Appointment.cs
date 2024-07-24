@@ -12,8 +12,10 @@ namespace TarotAppointment.Models
         public string user_id { get; set; }
         [ForeignKey("Service")]
         public int service_id { get; set; }
-        public string date_appointment { get; set; }
-        public string time_slot { get; set; }
+
+        //Kailangan ata madeserialize para maconvert into shit pero tignan kung di na need sa frontend basta iset lng format
+        public DateOnly date_appointment { get; set; }
+        public TimeOnly time_slot { get; set; }
         public int status { get; set; }
 
 

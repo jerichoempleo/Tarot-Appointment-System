@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TarotAppointment.Models;
 
@@ -11,9 +12,11 @@ using TarotAppointment.Models;
 namespace TarotAppointment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240723125326_ScheduleDateOnly")]
+    partial class ScheduleDateOnly
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -231,8 +234,9 @@ namespace TarotAppointment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("appointment_id"));
 
-                    b.Property<DateOnly>("date_appointment")
-                        .HasColumnType("date");
+                    b.Property<string>("date_appointment")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("service_id")
                         .HasColumnType("int");
@@ -240,8 +244,9 @@ namespace TarotAppointment.Migrations
                     b.Property<int>("status")
                         .HasColumnType("int");
 
-                    b.Property<TimeOnly>("time_slot")
-                        .HasColumnType("time");
+                    b.Property<string>("time_slot")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("user_id")
                         .IsRequired()
