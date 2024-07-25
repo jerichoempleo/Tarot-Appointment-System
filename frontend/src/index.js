@@ -12,6 +12,9 @@ import Products from "./routes/Products";
 import Home from "./routes/Home";
 import Reports from "./routes/Reports";
 import Navbar from "./components/Navbar.js";
+import Appointments from "./routes/Appointments";
+import Schedules from "./routes/Schedules";
+import Services from "./routes/Services";
 import "./App.css";
 
 const AppLayout = () => (
@@ -46,6 +49,18 @@ const router = createBrowserRouter([
       {
         path: "reports",
         element: <Reports />,
+      },
+      {
+        path: "appointments",
+        element: <Appointments />,
+      },
+      {
+        path: "services",
+        element: <Services />,
+      },
+      {
+        path: "schedules",
+        element: <Schedules />,
       },
     ],
   },
