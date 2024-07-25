@@ -1,7 +1,8 @@
+import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-function StudentCrud() {
+function Home() {
 
 const [student_id, setstudentId] = useState(""); //student_id = name in the database
 const [stname, setName] = useState("");
@@ -181,4 +182,4 @@ const [students, setUsers] = useState([]);
     );
   }
   
-  export default StudentCrud;
+  export default Home;
