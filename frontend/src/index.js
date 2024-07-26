@@ -15,6 +15,9 @@ import Navbar from "./components/Navbar.js";
 import Appointments from "./routes/Appointments";
 import Schedules from "./routes/Schedules";
 import Services from "./routes/Services";
+import Login from "./routes/Login";
+import Register from "./routes/Register";
+
 import "./App.css";
 
 const AppLayout = () => (
@@ -35,11 +38,23 @@ const AppLayout = () => (
 // );
 
 const router = createBrowserRouter([
+  //Without Sidebar
   {
+    path: "/",
+    element: <Login />, //Path for the Initial Page (Pag nirun ung program)
+  },
+  {
+    path: "register",
+    element: <Register />,
+  },
+
+  //This Section is part of the Sidebar
+  {
+    path: "",
     element: <AppLayout />,
     children: [
       {
-        path: "/",
+        path: "home",
         element: <Home />,
       },
       {
@@ -49,6 +64,7 @@ const router = createBrowserRouter([
       {
         path: "reports",
         element: <Reports />,
+
       },
       {
         path: "appointments",
