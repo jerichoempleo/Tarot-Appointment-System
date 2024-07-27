@@ -27,5 +27,7 @@ namespace TarotAppointment.Models
 
         //Code for connecting in the AppDbContext Foreign Keys
         public ICollection<Notification> Notifications { get; set; }
+
+        public ICollection<Service> Services { get; set; }
     }
 }

@@ -12,14 +12,8 @@ function Home() {
   }, []);
 
   async function Load() {
-    const jwttoken = sessionStorage.getItem('jwttoken'); // Retrieve the JWT token from session storage
-
     try {
-      const result = await axios.get("https://localhost:7160/api/Student/GetStudent", {
-        headers: {
-          'Authorization': 'Bearer ' + jwttoken,
-        }
-      });
+      const result = await axios.get("https://localhost:7160/api/Student/GetStudent");
       setUsers(result.data);
       console.log(result.data);
     } catch (error) {
@@ -29,16 +23,11 @@ function Home() {
 
   async function save(event) {
     event.preventDefault();
-    const jwttoken = sessionStorage.getItem('jwttoken'); // Retrieve the JWT token from session storage
 
     try {
       await axios.post("https://localhost:7160/api/Student/AddStudent", {
         stname: stname, //Name in the database
         course: course,
-      }, {
-        headers: {
-          'Authorization': 'Bearer ' + jwttoken,
-        }
       });
       alert("Student Registration Successfully");
       setstudentId("");
@@ -58,14 +47,8 @@ function Home() {
   }
 
   async function DeleteStudent(student_id) {
-    const jwttoken = sessionStorage.getItem('jwttoken'); // Retrieve the JWT token from session storage
-
     try {
-      await axios.delete("https://localhost:7160/api/Student/DeleteStudent/" + student_id, {
-        headers: {
-          'Authorization': 'Bearer ' + jwttoken,
-        }
-      });
+      await axios.delete("https://localhost:7160/api/Student/DeleteStudent/" + student_id);
       alert("Student deleted Successfully");
       setstudentId("");
       setName("");
@@ -78,17 +61,12 @@ function Home() {
 
   async function update(event) {
     event.preventDefault();
-    const jwttoken = sessionStorage.getItem('jwttoken'); // Retrieve the JWT token from session storage
 
     try {
       await axios.patch("https://localhost:7160/api/Student/UpdateStudent/" + students.find((u) => u.student_id === student_id).student_id || student_id, {
         student_id: student_id, //Name in the database
         stname: stname,
         course: course,
-      }, {
-        headers: {
-          'Authorization': 'Bearer ' + jwttoken,
-        }
       });
       alert("Registration Updated");
       setstudentId("");

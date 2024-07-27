@@ -33,7 +33,7 @@ namespace TarotAppointment.Controllers
             var serviceDtos = services.Select(s => new ServiceDto
             {
                 service_id = s.service_id,
-                user_id = s.user_id,
+                //user_id = s.user_id,
                 service_name = s.service_name,
                 description = s.description,
                 price = s.price
@@ -85,7 +85,7 @@ namespace TarotAppointment.Controllers
             var createdServiceDto = new ServiceDto
             {
                 service_id = newService.service_id,
-                user_id = newService.user_id,
+                //user_id = newService.user_id,
                 service_name = newService.service_name,
                 description = newService.description,
                 price = newService.price
@@ -123,7 +123,7 @@ namespace TarotAppointment.Controllers
                 UpdatedService = new ServiceDto
                 {
                     service_id = existingService.service_id,
-                    user_id = existingService.user_id,
+                    //user_id = existingService.user_id,
                     service_name = existingService.service_name,
                     description = existingService.description,
                     price = existingService.price

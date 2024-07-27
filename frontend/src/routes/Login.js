@@ -33,7 +33,7 @@ sessionStorage.clear();
                 }else{
                      toast.success('Success');
                      sessionStorage.setItem('email',email);
-                     sessionStorage.setItem('jwttoken',resp.jwtToken);
+                     sessionStorage.setItem('jwttoken',resp.token); //the .token is from the variable holder of the token named "token"
                    usenavigate('/home') //Redirect after logging in
                 }
 
