@@ -23,11 +23,11 @@ namespace TarotAppointment.Models
         //public Client Client { get; set; }
 
         public AppUser AppUser { get; set; }
-        public Service Service { get; set; }
+        //public Service Service { get; set; }
 
         //Code for connecting in the AppDbContext Foreign Keys
         public ICollection<Notification> Notifications { get; set; }
 
-        public ICollection<Service> Services { get; set; }
+        //public ICollection<Service> Services { get; set; }
     }
 }

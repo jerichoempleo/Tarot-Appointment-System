@@ -68,6 +68,7 @@ namespace TarotAppointment.Models
                 .HasForeignKey(s => s.user_id)
                 .OnDelete(DeleteBehavior.ClientSetNull); // I set it to ClientSetNull para mawala ung "foreign key constraint on table may cause cycles or multiple cascade paths"
 
+            //Di ko muna need eto
             //modelBuilder.Entity<Appointment>()
             //    .HasOne(s => s.Service)
             //    .WithMany(a => a.Appointments) // If there's a red line then there's missing code in Appointment.cs
