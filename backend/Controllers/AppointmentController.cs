@@ -39,6 +39,7 @@ namespace TarotAppointment.Controllers
             {
                 user_id = userId, // Use the authenticated user ID
                 service_id = appointmentDto.service_id,
+                schedule_id = appointmentDto.schedule_id,
                 date_appointment = appointmentDto.date_appointment,
                 time_slot = appointmentDto.time_slot,
                 status = appointmentDto.status,
@@ -54,6 +55,7 @@ namespace TarotAppointment.Controllers
                 appointment_id = newAppointment.appointment_id,
                 //  user_id = newSchedule.user_id,
                 service_id = newAppointment.service_id,
+                schedule_id = newAppointment.schedule_id,
                 date_appointment = newAppointment.date_appointment,
                 time_slot = newAppointment.time_slot,
                 status = newAppointment.status

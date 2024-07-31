@@ -21,8 +21,8 @@ namespace TarotAppointment.Models
 
         // Connecting Foreign Keys to another table 
         public AppUser AppUser { get; set; }
-        public Service Service { get; set; }
         public Schedule Schedule { get; set; }
+        public Service Service { get; set; }
 
         //Code for connecting in the AppDbContext Foreign Keys | update: di ko nagets ano purpose neto
         public ICollection<Notification> Notifications { get; set; }

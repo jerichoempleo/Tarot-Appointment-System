@@ -12,7 +12,7 @@ namespace TarotAppointment.Models
         [ForeignKey("AppUser")]
         public string user_id { get; set; }
         public int number_slots { get; set; }
-        public DateOnly  date { get; set; } //i-double check sa dtabase and migration kasi duda ako sa code
+        public DateOnly  date { get; set; }
 
         // Need neto for connecting it to another table
         public AppUser AppUser { get; set; }

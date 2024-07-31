@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TarotAppointment.Models;
 
@@ -11,9 +12,11 @@ using TarotAppointment.Models;
 namespace TarotAppointment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240731092440_removescheduleID")]
+    partial class removescheduleID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -234,9 +237,6 @@ namespace TarotAppointment.Migrations
                     b.Property<DateOnly>("date_appointment")
                         .HasColumnType("date");
 
-                    b.Property<int>("schedule_id")
-                        .HasColumnType("int");
-
                     b.Property<int>("service_id")
                         .HasColumnType("int");
 
@@ -252,10 +252,6 @@ namespace TarotAppointment.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("appointment_id");
-
-                    b.HasIndex("schedule_id");
-
-                    b.HasIndex("service_id");
 
                     b.HasIndex("user_id");
 
@@ -449,27 +445,12 @@ namespace TarotAppointment.Migrations
 
             modelBuilder.Entity("TarotAppointment.Models.Appointment", b =>
                 {
-                    b.HasOne("TarotAppointment.Models.Schedule", "Schedule")
-                        .WithMany()
-                        .HasForeignKey("schedule_id")
-                        .IsRequired();
-
-                    b.HasOne("TarotAppointment.Models.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("service_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TarotAppointment.Models.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("user_id")
                         .IsRequired();
 
                     b.Navigation("AppUser");
-
-                    b.Navigation("Schedule");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("TarotAppointment.Models.Message", b =>

@@ -16,6 +16,7 @@ namespace TarotAppointment.Models
             public DbSet<Schedule> Schedules { get; set; }
             public DbSet<Appointment> Appointments { get; set; }
             public DbSet<Notification> Notifications { get; set; }
+            public DbSet<Message> Messages { get; set; }
 
         //Adding a foreign key
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -66,17 +67,11 @@ namespace TarotAppointment.Models
                 .HasForeignKey(s => s.user_id)
                 .OnDelete(DeleteBehavior.ClientSetNull); // I set it to ClientSetNull para mawala ung "foreign key constraint on table may cause cycles or multiple cascade paths"
 
-            modelBuilder.Entity<Appointment>()
+           modelBuilder.Entity<Appointment>()
                .HasOne(a => a.Schedule)
-               .WithMany()
+               .WithMany() //  one Schedule can have multiple Appointments
                .HasForeignKey(a => a.schedule_id)
                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            modelBuilder.Entity<Appointment>()
-              .HasOne(a => a.Service)
-              .WithMany()
-              .HasForeignKey(a => a.service_id)
-              .OnDelete(DeleteBehavior.ClientSetNull);
 
         }
 
