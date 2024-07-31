@@ -8,13 +8,15 @@ import {
   Outlet,
   createRoutesFromElements,
 } from "react-router-dom";
+
+//If changing source files then change here
 import Products from "./routes/Products";
 import Home from "./routes/Home";
 import Reports from "./routes/Reports";
 import Navbar from "./components/Navbar.js";
-import Appointments from "./routes/Appointments";
-import Schedules from "./routes/Schedules";
-import Services from "./routes/Services";
+import Appointments from "./routes/users/Appointments";
+import Schedules from "./routes/admins/Schedules.js";
+import Services from "./routes/admins/Services.js";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 

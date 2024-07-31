@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "axios"; //Connecting to API
 
 function Services() {
   const [serviceId, setServiceId] = useState("");
@@ -22,10 +22,8 @@ function Services() {
       const result = await axios.get("https://localhost:7160/api/Service/GetService", {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setServices(result.data.Services);
+      setServices(result.data.services); //Dito lang pala ako nagkamali kaya di nagana .map function dapat small "s"
       console.log(result.data);
-      // Extract the services data and making sure that there is always an array even though it is empty
-      setServices(result.data.services || []);
     } catch (error) {
       console.error("There was an error loading the data!", error);
     }
@@ -37,7 +35,7 @@ function Services() {
     try {
       const token = getToken();
       await axios.post("https://localhost:7160/api/Service/AddService", {
-        service_name,
+        service_name, //Name in the database
         description,
         price,
       }, {

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TarotAppointment.Models;
 
@@ -11,9 +12,11 @@ using TarotAppointment.Models;
 namespace TarotAppointment.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240731071913_appointmentScheduleID")]
+    partial class appointmentScheduleID
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -253,10 +256,6 @@ namespace TarotAppointment.Migrations
 
                     b.HasKey("appointment_id");
 
-                    b.HasIndex("schedule_id");
-
-                    b.HasIndex("service_id");
-
                     b.HasIndex("user_id");
 
                     b.ToTable("Appointments");
@@ -449,26 +448,12 @@ namespace TarotAppointment.Migrations
 
             modelBuilder.Entity("TarotAppointment.Models.Appointment", b =>
                 {
-                    b.HasOne("TarotAppointment.Models.Schedule", "Schedule")
-                        .WithMany()
-                        .HasForeignKey("schedule_id")
-                        .IsRequired();
-
-                    b.HasOne("TarotAppointment.Models.Service", "Service")
-                        .WithMany()
-                        .HasForeignKey("service_id")
-                        .IsRequired();
-
                     b.HasOne("TarotAppointment.Models.AppUser", "AppUser")
                         .WithMany()
                         .HasForeignKey("user_id")
                         .IsRequired();
 
                     b.Navigation("AppUser");
-
-                    b.Navigation("Schedule");
-
-                    b.Navigation("Service");
                 });
 
             modelBuilder.Entity("TarotAppointment.Models.Message", b =>
