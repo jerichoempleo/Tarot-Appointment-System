@@ -81,7 +81,7 @@ namespace TarotAppointment.Controllers
             _appDbContext.Services.Add(newService);
             await _appDbContext.SaveChangesAsync();
 
-            // Return the created ServiceDto
+            // Data displays on the Swagger API
             var createdServiceDto = new ServiceDto
             {
                 service_id = newService.service_id,

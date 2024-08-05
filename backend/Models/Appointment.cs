@@ -14,7 +14,7 @@ namespace TarotAppointment.Models
         public int service_id { get; set; }
         [ForeignKey("Schedule")]
         public int schedule_id { get; set; }
-        public DateOnly date_appointment { get; set; }
+        public DateOnly? date_appointment { get; set; }  // Nullable DateOnly
         public string time_slot { get; set; }
         public int status { get; set; }
 

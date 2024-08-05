@@ -10,7 +10,6 @@ import {
 } from "react-router-dom";
 
 //If changing source files then change here
-import Products from "./routes/Products";
 import Home from "./routes/Home";
 import Reports from "./routes/Reports";
 import Navbar from "./components/Navbar.js";
@@ -59,10 +58,7 @@ const router = createBrowserRouter([
         path: "home",
         element: <Home />,
       },
-      {
-        path: "products",
-        element: <Products />,
-      },
+      
       {
         path: "reports",
         element: <Reports />,
