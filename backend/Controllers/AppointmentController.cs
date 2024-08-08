@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TarotAppointment.Dto;
 using TarotAppointment.Models;
 
 namespace TarotAppointment.Controllers
 {
+    [Authorize] //The need to use for token
     [Route("api/[controller]")]
     [ApiController]
     public class AppointmentController : ControllerBase
@@ -61,6 +64,40 @@ namespace TarotAppointment.Controllers
             };
 
             return Ok(createdAppointmentDto);
+        }
+
+        //
+        [HttpGet]
+        [Route("GetAppointment")]
+        public async Task<IActionResult> GetAppointments()
+        {
+            // Get the user ID from the current authenticated user's claims
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+
+            // Display only the Users Appointment (Filtered per Account)
+            var appointments = await _appDbContext.Appointments
+                                                  .Where(a => a.user_id == userId)
+                                                  .ToListAsync();
+
+            // Map the Appointments to AppointmentDto
+            var appointmentDtos = appointments.Select(a => new AppointmentDto
+            {
+                appointment_id = a.appointment_id,
+                service_id = a.service_id,
+                schedule_id = a.schedule_id,
+                time_slot = a.time_slot
+
+            }).ToList();
+
+            // Response in the API
+            var response = new
+            {
+                UserId = userId,
+                Appointments = appointmentDtos
+            };
+
+            return Ok(response);
         }
     }
 }

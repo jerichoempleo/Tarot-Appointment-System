@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function Appointments() {
-  const [appointmentId, setAppointmentId] = useState("");
+  // const [appointmentId, setAppointmentId] = useState("");
   const [serviceID, setServiceID] = useState("");
   const [scheduleID, setScheduleID] = useState("");
   // const [date_appointment, setAppointmentDate] = useState("");
@@ -61,7 +61,7 @@ function Appointments() {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Appointment Added Successfully");
-      setAppointmentId("");
+      // setAppointmentId("");
       setServiceID("");
       setScheduleID("");
       // setAppointmentDate("");

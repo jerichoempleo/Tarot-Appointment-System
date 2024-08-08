@@ -14,6 +14,7 @@ import Home from "./routes/Home";
 import Reports from "./routes/Reports";
 import Navbar from "./components/Navbar.js";
 import Appointments from "./routes/users/Appointments";
+import TransacHistory from "./routes/users/TransacHistory";
 import Schedules from "./routes/admins/Schedules.js";
 import Services from "./routes/admins/Services.js";
 import Login from "./routes/Login";
@@ -27,16 +28,6 @@ const AppLayout = () => (
     <Outlet />
   </>
 );
-
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route element={<AppLayout />}>
-//       <Route path="/" element={<Home />} />
-//       <Route path="/products" element={<Products />} />
-//       <Route path="/reports" element={<Reports />} />
-//     </Route>
-//   )
-// );
 
 const router = createBrowserRouter([
   //Without Sidebar
@@ -75,6 +66,10 @@ const router = createBrowserRouter([
       {
         path: "schedules",
         element: <Schedules />,
+      },
+      {
+        path: "transactionhistory",
+        element: <TransacHistory />,
       },
     ],
   },

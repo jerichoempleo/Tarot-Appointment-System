@@ -35,4 +35,10 @@ export const SidebarData = [
     icon: <IoIcons.IoMdHelpCircle />,
     cName: "nav-text",
   },
+  {
+    title: "Transaction History",
+    path: "/transactionhistory",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
 ];
