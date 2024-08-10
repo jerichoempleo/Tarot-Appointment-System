@@ -19,8 +19,10 @@ import Schedules from "./routes/admins/Schedules.js";
 import Services from "./routes/admins/Services.js";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
-
+import PendingAppointment from "./routes/admins/PendingAppointment.js";
+import CompleteAppointment from "./routes/admins/CompleteAppointment.js";
 import "./App.css";
+
 
 const AppLayout = () => (
   <>
@@ -70,6 +72,14 @@ const router = createBrowserRouter([
       {
         path: "transactionhistory",
         element: <TransacHistory />,
+      },
+      {
+        path: "pendingappointment",
+        element: <PendingAppointment />,
+      },
+      {
+        path: "completeappointment",
+        element: <CompleteAppointment />,
       },
     ],
   },

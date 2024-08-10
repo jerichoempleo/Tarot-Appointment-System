@@ -41,4 +41,16 @@ export const SidebarData = [
     icon: <IoIcons.IoMdPeople />,
     cName: "nav-text",
   },
+  {
+    title: "Pending Appointment",
+    path: "/pendingappointment",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
+  {
+    title: "Complete Appointment",
+    path: "/completeappointment",
+    icon: <IoIcons.IoMdPeople />,
+    cName: "nav-text",
+  },
 ];

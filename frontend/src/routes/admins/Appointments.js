@@ -4,7 +4,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
-function Reports() {
+function Appointments() {
   return (
     <div>
       <Fullcalendar
@@ -21,4 +21,4 @@ function Reports() {
   );
 }
 
-export default Reports;
+export default Appointments;
