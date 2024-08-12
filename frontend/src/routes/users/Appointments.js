@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance"; //Code for base url
 
 function Appointments() {
   // const [appointmentId, setAppointmentId] = useState("");
@@ -12,7 +12,7 @@ function Appointments() {
   const [schedules, setSchedules] = useState([]);
 
   // Helper function to get JWT token
-  const getToken = () => sessionStorage.getItem('jwttoken');
+  const getToken = () => sessionStorage.getItem('jwttoken'); //jwttoken = variable in backend
 
   useEffect(() => {
     (async () => {
@@ -24,7 +24,7 @@ function Appointments() {
   async function loadServices() {
     try {
       const token = getToken();
-      const response = await axios.get("https://localhost:7160/api/Service/GetService", {
+      const response = await axiosInstance.get("/api/Service/GetService", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setServices(response.data.services); //kulang ng .services kaya ayaw lumabas
@@ -36,7 +36,7 @@ function Appointments() {
   async function loadSchedules() {
     try {
       const token = getToken();
-      const response = await axios.get("https://localhost:7160/api/Schedule/GetSchedule", {
+      const response = await axiosInstance.get("/api/Schedule/GetSchedule", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSchedules(response.data.schedules); //kulang ng .services kaya ayaw lumabas
@@ -52,7 +52,7 @@ function Appointments() {
     
     try {
       const token = getToken();
-      await axios.post("https://localhost:7160/api/Appointment/AddAppointment", {
+      await axiosInstance.post("/api/Appointment/AddAppointment", {
         service_id: serviceID, //With Foreign Key to save in the DB
         schedule_id: scheduleID, //With Foreign Key to save in the DB
         // date_appointment,

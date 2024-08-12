@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance"; //Code for base url
 
 function Schedules() {
   const [scheduleId, setScheduleId] = useState("");
@@ -18,7 +18,7 @@ function Schedules() {
   async function Load() {
     try {
       const token = getToken();
-      const result = await axios.get("https://localhost:7160/api/Schedule/GetSchedule", {
+      const result = await axiosInstance.get("/api/Schedule/GetSchedule", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSchedules(result.data.schedules); //Dito lang pala ako nagkamali kaya di nagana .map function dapat small "s"
@@ -33,7 +33,7 @@ function Schedules() {
     
     try {
       const token = getToken();
-      await axios.post("https://localhost:7160/api/Schedule/AddSchedule", {
+      await axiosInstance.post("/api/Schedule/AddSchedule", {
         number_slots, //Name in the database
         date
       }, {
@@ -58,7 +58,7 @@ function Schedules() {
   async function DeleteSchedule(schedule_id) {
     try {
       const token = getToken();
-      await axios.delete(`https://localhost:7160/api/Schedule/DeleteSchedule/${schedule_id}`, {
+      await axiosInstance.delete(`/api/Schedule/DeleteSchedule/${schedule_id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Schedule deleted Successfully");
@@ -76,7 +76,7 @@ function Schedules() {
 
     try {
       const token = getToken();
-      await axios.patch(`https://localhost:7160/api/Schedule/UpdateSchedule/${scheduleId}`, {
+      await axiosInstance.patch(`/api/Schedule/UpdateSchedule/${scheduleId}`, {
         number_slots, //Database name
         date
       }, {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"; //Connecting to API
+import axiosInstance from "../../api/axiosInstance"; //Code for base url
 
 function Services() {
   const [serviceId, setServiceId] = useState("");
@@ -19,7 +19,7 @@ function Services() {
   async function Load() {
     try {
       const token = getToken();
-      const result = await axios.get("https://localhost:7160/api/Service/GetService", {
+      const result = await axiosInstance.get("/api/Service/GetService", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setServices(result.data.services); //Dito lang pala ako nagkamali kaya di nagana .map function dapat small "s"
@@ -34,7 +34,7 @@ function Services() {
     
     try {
       const token = getToken();
-      await axios.post("https://localhost:7160/api/Service/AddService", {
+      await axiosInstance.post("/api/Service/AddService", {
         service_name, //Name in the database
         description,
         price,
@@ -62,7 +62,7 @@ function Services() {
   async function DeleteService(service_id) {
     try {
       const token = getToken();
-      await axios.delete(`https://localhost:7160/api/Service/DeleteService/${service_id}`, {
+      await axiosInstance.delete(`/api/Service/DeleteService/${service_id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert("Service deleted Successfully");
@@ -81,7 +81,7 @@ function Services() {
 
     try {
       const token = getToken();
-      await axios.patch(`https://localhost:7160/api/Service/UpdateService/${serviceId}`, {
+      await axiosInstance.patch(`/api/Service/UpdateService/${serviceId}`, {
         service_name,
         description,
         price,

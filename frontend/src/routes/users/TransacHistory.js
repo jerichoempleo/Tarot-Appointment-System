@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance"; //Code for base url
 
 function TransacHistory() {
   const [appointments, setAppointments] = useState([]);
@@ -17,7 +17,7 @@ function TransacHistory() {
   async function loadServices() {
     try {
       const token = getToken();
-      const response = await axios.get("https://localhost:7160/api/Service/GetService", {
+      const response = await axiosInstance.get("/api/Service/GetService", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setServices(response.data.services);
@@ -29,7 +29,7 @@ function TransacHistory() {
   async function loadSchedules() {
     try {
       const token = getToken();
-      const response = await axios.get("https://localhost:7160/api/Schedule/GetSchedule", {
+      const response = await axiosInstance.get("/api/Schedule/GetSchedule", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setSchedules(response.data.schedules);
@@ -41,7 +41,7 @@ function TransacHistory() {
   async function loadAppointments() {
     try {
       const token = getToken();
-      const response = await axios.get("https://localhost:7160/api/Appointment/GetAppointment", {
+      const response = await axiosInstance.get("/api/Appointment/GetAppointment", {
         headers: { Authorization: `Bearer ${token}` }
       });
       setAppointments(response.data.appointments);

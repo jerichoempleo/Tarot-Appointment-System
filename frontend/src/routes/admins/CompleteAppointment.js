@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance"; //Code for base url
 
 function CompleteAppointment() {
   const [appointments, setAppointments] = useState([]);
@@ -17,8 +17,8 @@ function CompleteAppointment() {
   async function loadServices() {
     try {
       const token = getToken();
-      const response = await axios.get(
-        "https://localhost:7160/api/Service/GetService",
+      const response = await axiosInstance.get(
+        "/api/Service/GetService",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -32,10 +32,9 @@ function CompleteAppointment() {
   async function loadSchedules() {
     try {
       const token = getToken();
-      const response = await axios.get(
-        "https://localhost:7160/api/Schedule/GetSchedule",
+      const response = await axiosInstance.get(
+        "/api/Schedule/GetSchedule",
         {
-          //The url is the only thing i changed here
           headers: { Authorization: `Bearer ${token}` },
         }
       );
@@ -48,8 +47,8 @@ function CompleteAppointment() {
   async function loadAppointments() {
     try {
       const token = getToken();
-      const response = await axios.get(
-        "https://localhost:7160/api/Appointment/GetCompleteAppointment",
+      const response = await axiosInstance.get(
+        "/api/Appointment/GetCompleteAppointment",
         {
           headers: { Authorization: `Bearer ${token}` },
         }
