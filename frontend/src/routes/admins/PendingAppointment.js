@@ -60,6 +60,22 @@ function PendingAppointment() {
     }
   }
 
+  async function CompleteAppointment(appointment) {
+    try {
+      const token = getToken();
+      await axiosInstance.put(
+        `/api/Appointment/CompleteStatus/${appointment.appointment_id}`, {}, // Empty object for request body
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      alert("Appointment Complete Successfully");
+      await loadAppointments();
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  }
+
   const getToken = () => sessionStorage.getItem("jwttoken");
 
   return (
@@ -72,6 +88,7 @@ function PendingAppointment() {
             <th scope="col">Appointment ID</th>
             <th scope="col">Service Name</th>
             <th scope="col">Date Appointment</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
@@ -88,6 +105,15 @@ function PendingAppointment() {
                 <td>{appointment.appointment_id}</td>
                 <td>{service.service_name}</td>
                 <td>{schedule.date}</td>
+                <td>
+                  <button
+                    type="button"
+                    className="btn btn-warning"
+                    onClick={() => CompleteAppointment(appointment)}
+                  >
+                    Complete
+                  </button>
+              </td>
               </tr>
             );
           })}
