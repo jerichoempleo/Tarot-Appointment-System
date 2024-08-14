@@ -11,7 +11,7 @@ import {
 
 //If changing source files then change here
 import Home from "./routes/Home";
-import Reports from "./routes/Reports";
+import Reports from "./routes/users/Reports";
 import Navbar from "./components/Navbar.js";
 import Appointments from "./routes/users/Appointments";
 import TransacHistory from "./routes/users/TransacHistory";

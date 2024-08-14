@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; //without reloading the entire page
 
+
 function Register() {
     const [fullName, setFullName] = useState(""); //name in the database
     const [email, setEmail] = useState("");

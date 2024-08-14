@@ -96,15 +96,16 @@ function PendingAppointment() {
             const service = services.find(
               (service) => service.service_id === appointment.service_id
             );
-            const schedule = schedules.find(
-              (schedule) => schedule.schedule_id === appointment.schedule_id
-            );
+            // const schedule = schedules.find(
+            //   (schedule) => schedule.schedule_id === appointment.schedule_id
+            // );
 
             return (
               <tr key={appointment.appointment_id}>
                 <td>{appointment.appointment_id}</td>
                 <td>{service.service_name}</td>
-                <td>{schedule.date}</td>
+                {/* <td>{schedule.date}</td> */}
+                <td>{appointment.date_appointment}</td>
                 <td>
                   <button
                     type="button"

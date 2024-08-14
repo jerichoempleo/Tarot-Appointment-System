@@ -74,7 +74,8 @@ function TransacHistory() {
               <tr key={appointment.appointment_id}>
                 <td>{appointment.appointment_id}</td>
                 <td>{service.service_name}</td>
-                <td>{schedule.date}</td> 
+                <td>{appointment.date_appointment}</td>
+                {/* <td>{schedule.date}</td>  */}
               </tr>
             );
           })}
