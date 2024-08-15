@@ -3,54 +3,21 @@ import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import * as IoIcons from "react-icons/io";
 
-export const SidebarData = [
-  {
-    title: "Home",
-    path: "/home",
-    icon: <AiIcons.AiFillHome />,
-    cName: "nav-text",
-  },
-  {
-    title: "Reports",
-    path: "/reports",
-    icon: <IoIcons.IoIosPaper />,
-    cName: "nav-text",
-  },
-  
-  {
-    title: "Appointments",
-    path: "/appointments",
-    icon: <IoIcons.IoMdPeople />,
-    cName: "nav-text",
-  },
-  {
-    title: "Schedules",
-    path: "/schedules",
-    icon: <FaIcons.FaEnvelopeOpenText />,
-    cName: "nav-text",
-  },
-  {
-    title: "Services",
-    path: "/services",
-    icon: <IoIcons.IoMdHelpCircle />,
-    cName: "nav-text",
-  },
-  {
-    title: "Transaction History",
-    path: "/transactionhistory",
-    icon: <IoIcons.IoMdPeople />,
-    cName: "nav-text",
-  },
-  {
-    title: "Pending Appointment",
-    path: "/pendingappointment",
-    icon: <IoIcons.IoMdPeople />,
-    cName: "nav-text",
-  },
-  {
-    title: "Complete Appointment",
-    path: "/completeappointment",
-    icon: <IoIcons.IoMdPeople />,
-    cName: "nav-text",
-  },
-];
+export const getSidebarData = () => {
+  const roles = sessionStorage.getItem('roles'); // Check in the Application inspect to get the users role
+
+  const allItems = [
+      { title: "Home", path: "/home", icon: <AiIcons.AiFillHome />, cName: "nav-text", roles: ["User", "Admin"] },
+      { title: "Reports", path: "/reports", icon: <IoIcons.IoIosPaper />, cName: "nav-text", roles: ["Admin"] },
+      { title: "Appointments", path: "/appointments", icon: <IoIcons.IoMdPeople />, cName: "nav-text", roles: ["User"] },
+      { title: "Schedules", path: "/schedules", icon: <FaIcons.FaEnvelopeOpenText />, cName: "nav-text", roles: ["Admin"] },
+      { title: "Services", path: "/services", icon: <IoIcons.IoMdHelpCircle />, cName: "nav-text", roles: ["Admin"] },
+      { title: "Transaction History", path: "/transactionhistory", icon: <IoIcons.IoMdPeople />, cName: "nav-text", roles: ["User"] },
+      { title: "Pending Appointment", path: "/pendingappointment", icon: <IoIcons.IoMdPeople />, cName: "nav-text", roles: ["Admin"] },
+      { title: "Complete Appointment", path: "/completeappointment", icon: <IoIcons.IoMdPeople />, cName: "nav-text", roles: ["Admin"] },
+      { title: "Events", path: "/events", icon: <IoIcons.IoMdPeople />, cName: "nav-text", roles: ["Admin"] }
+  ];
+
+  // Displays the pages based on the users role 
+   return allItems.filter(item => item.roles && item.roles.some(role => roles.includes(role)));
+};

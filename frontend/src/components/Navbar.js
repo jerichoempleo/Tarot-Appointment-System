@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { SidebarData } from "./SidebarData";
+// import { SidebarData } from "./SidebarData";
+import { getSidebarData } from "./SidebarData"; // Updated to import getSidebarData
 import "../App.css";
 import { IconContext } from "react-icons";
 
@@ -11,7 +12,11 @@ function Navbar() {
 
   const showSidebar = () => setSidebar(!sidebar);
 
-  return (
+
+  // Fetch filtered sidebar data based on user roles
+  const sidebarItems = getSidebarData();
+
+   return (
     <>
       <IconContext.Provider value={{ color: "undefined" }}>
         <div className="navbar">
@@ -26,7 +31,7 @@ function Navbar() {
                 <AiIcons.AiOutlineClose />
               </Link>
             </li>
-            {SidebarData.map((item, index) => {
+            {sidebarItems.map((item, index) => {
               return (
                 <li key={index} className={item.cName}>
                   <Link to={item.path}>

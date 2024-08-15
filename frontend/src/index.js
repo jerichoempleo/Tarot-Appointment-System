@@ -22,6 +22,7 @@ import Register from "./routes/Register";
 import PendingAppointment from "./routes/admins/PendingAppointment.js";
 import CompleteAppointment from "./routes/admins/CompleteAppointment.js";
 import "./App.css";
+import Events from "./routes/admins/Events.js";
 
 
 const AppLayout = () => (
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
       {
         path: "completeappointment",
         element: <CompleteAppointment />,
+      },
+      {
+        path: "events",
+        element: <Events />,
       },
     ],
   },

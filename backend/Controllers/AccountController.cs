@@ -116,11 +116,14 @@ namespace TarotAppointment.Controllers
 
             var token = GenerateToken(user);
 
+            var roles = await _userManager.GetRolesAsync(user); //List all the roles
+
             return Ok(new AuthResponseDto
             {
                 Token = token,
                 IsSuccess = true,
-                Message = "Login Success."
+                Message = "Login Success.",
+                Roles = roles
             });
 
 
