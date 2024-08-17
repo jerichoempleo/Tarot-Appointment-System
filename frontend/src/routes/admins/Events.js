@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import axiosInstance from "../../api/axiosInstance"; // Make sure to use the same axiosInstance
 
 const localizer = momentLocalizer(moment);
 
@@ -12,11 +13,40 @@ const Events = () => {
   const [eventTitle, setEventTitle] = useState("");
   const [selectEvent, setSelectEvent] = useState(null);
 
+  // Helper function to get JWT token
+  const getToken = () => sessionStorage.getItem('jwttoken');
+
+  useEffect(() => {
+    // Fetch schedules and convert them to events for the calendar
+    const fetchSchedules = async () => {
+      try {
+        const token = getToken();
+        const result = await axiosInstance.get("/api/Schedule/GetSchedule", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const schedules = result.data.schedules;
+        const calendarEvents = schedules.map(schedule => ({
+          title: `Slots: ${schedule.number_slots}`,
+          start: new Date(schedule.date),
+          end: new Date(schedule.date), // Both start and end are the same
+          allDay: true, // Make it an all-day event
+       
+        }));
+        setEvents(calendarEvents);
+      } catch (error) {
+        console.error("There was an error fetching the schedules!", error);
+      }
+    };
+
+    fetchSchedules();
+  }, []);
+
   const handleSelectSlot = (slotInfo) => {
     setShowModal(true);
     setSelectedDate(slotInfo.start);
     setSelectEvent(null);
   };
+
   const handleSelectedEvent = (event) => {
     setShowModal(true);
     setSelectEvent(event);
@@ -35,9 +65,8 @@ const Events = () => {
         const newEvent = {
           title: eventTitle,
           start: selectedDate,
-          end: moment(selectedDate)
-            .add(1, "hours")
-            .toDate(),
+          end: selectedDate,
+          allDay: true,
         };
         setEvents([...events, newEvent]);
       }
@@ -47,15 +76,15 @@ const Events = () => {
     }
   };
 
-const deleteEvents = () =>{
-  if (selectEvent){
-    const updatedEvents = events.filter((event) => event !== selectEvent);
-    setEvents(updatedEvents);
-    setShowModal(false);
-    setEventTitle('');
-    setSelectEvent(null);
+  const deleteEvents = () => {
+    if (selectEvent) {
+      const updatedEvents = events.filter((event) => event !== selectEvent);
+      setEvents(updatedEvents);
+      setShowModal(false);
+      setEventTitle('');
+      setSelectEvent(null);
+    }
   }
-}
 
   return (
     <div style={{ height: "500px" }}>
@@ -112,15 +141,15 @@ const deleteEvents = () =>{
                 />
               </div>
               <div className="modal-footer">
-                  {selectEvent && (
-                    <button 
+                {selectEvent && (
+                  <button 
                     type="button"
                     className="btn btn-danger me-2"
                     onClick={deleteEvents}
-                    >
-                  Delete Events
-                    </button>
-                  )}
+                  >
+                    Delete Event
+                  </button>
+                )}
                 <button
                   type="button"
                   className="btn btn-primary"

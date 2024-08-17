@@ -1,3 +1,4 @@
+//This file is kung anong laman ng sidebar (navbar.js ung design i think)
 import React from "react";
 import * as FaIcons from "react-icons/fa";
 import * as AiIcons from "react-icons/ai";
@@ -8,7 +9,6 @@ export const getSidebarData = () => {
 
   const allItems = [
       { title: "Home", path: "/home", icon: <AiIcons.AiFillHome />, cName: "nav-text", roles: ["User", "Admin"] },
-      { title: "Reports", path: "/reports", icon: <IoIcons.IoIosPaper />, cName: "nav-text", roles: ["Admin"] },
       { title: "Appointments", path: "/appointments", icon: <IoIcons.IoMdPeople />, cName: "nav-text", roles: ["User"] },
       { title: "Schedules", path: "/schedules", icon: <FaIcons.FaEnvelopeOpenText />, cName: "nav-text", roles: ["Admin"] },
       { title: "Services", path: "/services", icon: <IoIcons.IoMdHelpCircle />, cName: "nav-text", roles: ["Admin"] },
