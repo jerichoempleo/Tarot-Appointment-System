@@ -17,6 +17,7 @@ const Appointments = () => {
   const [serviceID, setServiceID] = useState("");
   const [date_appointment, setAppointmentDate] = useState("");
   const [time_slot, setTimeSlot] = useState("");
+  const [scheduleID, setScheduleID] = useState(""); 
 
   const [services, setServices] = useState([]);
 
@@ -55,6 +56,7 @@ const Appointments = () => {
         start: new Date(schedule.date),
         end: new Date(schedule.date), // Same start and end date for all-day event
         allDay: true, // Mark as all-day event
+        schedule_id: schedule.schedule_id, // Include schedule_id for reference
       }));
 
       setEvents(mappedEvents);
@@ -74,9 +76,9 @@ const Appointments = () => {
     setSelectEvent(event);
     setEventTitle(event.title);
 
-    // Set the date and time from the selected event
-    const formattedDate = moment(event.start).format("YYYY-MM-DD");
-    setAppointmentDate(formattedDate);
+    // Set the schedule ID and date_appointment from the selected event
+    setScheduleID(event.schedule_id);
+    setAppointmentDate(moment(event.start).format("YYYY-MM-DD"));
   };
 
   async function save(event) {
@@ -88,7 +90,8 @@ const Appointments = () => {
         "/api/Appointment/AddAppointment",
         {
           service_id: serviceID,
-          date_appointment,
+          schedule_id: scheduleID, // Pass schedule_id instead of date_appointment directly
+          date_appointment, // This should match the date in the selected schedule
           time_slot,
         },
         {
@@ -96,9 +99,14 @@ const Appointments = () => {
         }
       );
       alert("Appointment Added Successfully");
+
+      // After saving the appointment, it refreshes the slots
+      await loadSchedules();
+
       setServiceID("");
       setAppointmentDate("");
       setTimeSlot("");
+      setScheduleID(""); // Clear the schedule ID after saving
       setShowModal(false); // Close modal after saving
     } catch (err) {
       alert("Error: " + err.message);
@@ -135,7 +143,7 @@ const Appointments = () => {
           <div className="modal-dialog">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Add Appointment </h5>
+                <h5 className="modal-title">Add Appointment</h5>
                 <button
                   type="button"
                   className="btn-close"

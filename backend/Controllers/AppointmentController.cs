@@ -23,30 +23,45 @@ namespace TarotAppointment.Controllers
         [Route("AddAppointment")]
         public async Task<IActionResult> AddAppointment([FromBody] AppointmentDto appointmentDto)
         {
-            // This code is getting the user_id through the login token
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (string.IsNullOrEmpty(userId))
             {
                 return Unauthorized("User not authenticated.");
             }
 
-            // Check if the provided user_id corresponds to an existing AppUser
             var appUser = await _appDbContext.Users.FindAsync(userId);
             if (appUser == null)
             {
                 return BadRequest("Invalid user_id provided.");
             }
 
-            // Map ScheduleDto to Schedule entity
+            // Find the corresponding Schedule
+            var schedule = await _appDbContext.Schedules.FindAsync(appointmentDto.schedule_id);
+            if (schedule == null)
+            {
+                return NotFound("Schedule not found.");
+            }
+
+            // Decrease the number of slots by 1
+            if (schedule.number_slots > 0)
+            {
+                schedule.number_slots -= 1;
+            }
+            else
+            {
+                return BadRequest("No slots available.");
+            }
+
+            // Map AppointmentDto to Appointment entity
             var newAppointment = new Appointment
             {
-                user_id = userId, // Use the authenticated user ID
+                user_id = userId,
                 service_id = appointmentDto.service_id,
-                //schedule_id = appointmentDto.schedule_id,
+                schedule_id = appointmentDto.schedule_id,
                 date_appointment = appointmentDto.date_appointment,
                 time_slot = appointmentDto.time_slot,
-                //status = appointmentDto.status,
-                AppUser = appUser
+                AppUser = appUser,
+                Schedule = schedule
             };
 
             _appDbContext.Appointments.Add(newAppointment);
@@ -57,10 +72,9 @@ namespace TarotAppointment.Controllers
             {
                 appointment_id = newAppointment.appointment_id,
                 service_id = newAppointment.service_id,
-                //schedule_id = newAppointment.schedule_id,
+                schedule_id = newAppointment.schedule_id,
                 date_appointment = newAppointment.date_appointment,
-                time_slot = newAppointment.time_slot,
-                //status = newAppointment.status
+                time_slot = newAppointment.time_slot
             };
 
             return Ok(createdAppointmentDto);
