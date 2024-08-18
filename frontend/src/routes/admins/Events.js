@@ -17,28 +17,44 @@ const Events = () => {
   const getToken = () => sessionStorage.getItem('jwttoken');
 
   useEffect(() => {
-    // Fetch schedules and convert them to events for the calendar
-    const fetchSchedules = async () => {
+    // Fetch schedules and appointments and convert them to events for the calendar
+    const fetchSchedulesAndAppointments = async () => {
       try {
         const token = getToken();
-        const result = await axiosInstance.get("/api/Schedule/GetSchedule", {
+
+        // Fetch schedules
+        const scheduleResult = await axiosInstance.get("/api/Schedule/GetSchedule", {
           headers: { Authorization: `Bearer ${token}` }
         });
-        const schedules = result.data.schedules;
-        const calendarEvents = schedules.map(schedule => ({
-          title: `Slots: ${schedule.number_slots}`,
-          start: new Date(schedule.date),
-          end: new Date(schedule.date), // Both start and end are the same
-          allDay: true, // Make it an all-day event
-       
-        }));
+        const schedules = scheduleResult.data.schedules;
+
+        // Fetch appointments
+        const appointmentResult = await axiosInstance.get("/api/Appointment/GetPendingAppointment", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        const appointments = appointmentResult.data.appointments;
+
+        // Convert schedules to calendar events
+        const calendarEvents = schedules.flatMap(schedule => {
+          const scheduleAppointments = appointments.filter(appointment =>
+            new Date(appointment.date_appointment).toDateString() === new Date(schedule.date).toDateString()
+          );
+
+          return scheduleAppointments.map(appointment => ({
+            title: `Appointment ID: ${appointment.appointment_id}`,
+            start: new Date(appointment.date_appointment),
+            end: new Date(appointment.date_appointment), // Both start and end are the same
+            allDay: true, // Make it an all-day event
+          }));
+        });
+
         setEvents(calendarEvents);
       } catch (error) {
-        console.error("There was an error fetching the schedules!", error);
+        console.error("There was an error fetching the schedules and appointments!", error);
       }
     };
 
-    fetchSchedules();
+    fetchSchedulesAndAppointments();
   }, []);
 
   const handleSelectSlot = (slotInfo) => {

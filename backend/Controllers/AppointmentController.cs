@@ -100,7 +100,8 @@ namespace TarotAppointment.Controllers
                 service_id = a.service_id,
                 //schedule_id = a.schedule_id,
                 date_appointment = a.date_appointment,
-                time_slot = a.time_slot
+                time_slot = a.time_slot,
+                status = a.status
 
             }).ToList();
 

@@ -61,6 +61,7 @@ function TransacHistory() {
           <tr>
             <th scope="col">Appointment ID</th>
             <th scope="col">Service Name</th>
+            <th scope="col">Status</th>
             <th scope="col">Date Appointment</th>
           </tr>
         </thead>
@@ -68,12 +69,13 @@ function TransacHistory() {
         <tbody>
           {appointments.map((appointment) => {
             const service = services.find(service => service.service_id === appointment.service_id);
-            const schedule = schedules.find(schedule => schedule.schedule_id === appointment.schedule_id);
+            // const schedule = schedules.find(schedule => schedule.schedule_id === appointment.schedule_id);
 
             return (
               <tr key={appointment.appointment_id}>
                 <td>{appointment.appointment_id}</td>
                 <td>{service.service_name}</td>
+                <td>{appointment.status == 1 ? "Completed" : "Pending"}</td>
                 <td>{appointment.date_appointment}</td>
                 {/* <td>{schedule.date}</td>  */}
               </tr>
