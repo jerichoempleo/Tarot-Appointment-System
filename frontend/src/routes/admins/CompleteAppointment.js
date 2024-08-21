@@ -69,6 +69,7 @@ function CompleteAppointment() {
         <thead>
           <tr>
             <th scope="col">Appointment ID</th>
+            <th scope="col">Full Name</th>
             <th scope="col">Service Name</th>
             <th scope="col">Date Appointment</th>
           </tr>
@@ -85,6 +86,7 @@ function CompleteAppointment() {
             return (
               <tr key={appointment.appointment_id}>
                 <td>{appointment.appointment_id}</td>
+                <td>{appointment.user_fullname}</td>
                 <td>{service.service_name}</td>
                 {/* <td>{schedule.date}</td> */}
                 <td>{appointment.date_appointment}</td>

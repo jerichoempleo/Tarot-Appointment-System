@@ -150,8 +150,9 @@ namespace TarotAppointment.Controllers
 
             // Retrieve services from the database
             var appointments = await _appDbContext.Appointments
-               .Where(a => a.status == 0)
-               .ToListAsync();
+              .Include(a => a.AppUser) // Includes Identity to get the full name
+              .Where(a => a.status == 0)
+              .ToListAsync();
 
 
             // Map the Appointments to AppointmentDto
@@ -160,8 +161,9 @@ namespace TarotAppointment.Controllers
                 appointment_id = a.appointment_id,
                 service_id = a.service_id,
                 //schedule_id = a.schedule_id,
-                date_appointment = a.date_appointment
+                date_appointment = a.date_appointment,
                 //time_slot = a.time_slot
+                user_fullname = a.AppUser.FullName
 
             }).ToList();
 
@@ -185,8 +187,9 @@ namespace TarotAppointment.Controllers
 
             // Retrieve services from the database
             var appointments = await _appDbContext.Appointments
-               .Where(a => a.status == 1)
-               .ToListAsync();
+              .Include(a => a.AppUser) // Dont forget to add this for the users table
+              .Where(a => a.status == 1)
+              .ToListAsync();
 
             // Map the Appointments to AppointmentDto
             var appointmentDtos = appointments.Select(a => new AppointmentDto
@@ -194,8 +197,9 @@ namespace TarotAppointment.Controllers
                 appointment_id = a.appointment_id,
                 service_id = a.service_id,
                 //schedule_id = a.schedule_id,
-                date_appointment = a.date_appointment
+                date_appointment = a.date_appointment,
                 //time_slot = a.time_slot
+                user_fullname = a.AppUser.FullName
 
             }).ToList();
 

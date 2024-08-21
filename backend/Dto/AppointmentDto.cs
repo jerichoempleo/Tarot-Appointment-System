@@ -11,5 +11,7 @@
         public string time_slot { get; set; }
         
         public int status { get; set; }
+
+        public string? user_fullname { get; set; }
     }
 }

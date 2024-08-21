@@ -10,13 +10,28 @@ const Events = () => {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [eventTitle, setEventTitle] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [serviceName, setServiceName] = useState(""); // New state for service name
   const [selectEvent, setSelectEvent] = useState(null);
+
+  const [services, setServices] = useState([]);
 
   // Helper function to get JWT token
   const getToken = () => sessionStorage.getItem('jwttoken');
 
   useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const token = getToken();
+        const response = await axiosInstance.get("/api/Service/GetService", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        setServices(response.data.services);
+      } catch (error) {
+        console.error("There was an error fetching the services!", error);
+      }
+    };
+
     // Fetch schedules and appointments and convert them to events for the calendar
     const fetchSchedulesAndAppointments = async () => {
       try {
@@ -40,12 +55,18 @@ const Events = () => {
             new Date(appointment.date_appointment).toDateString() === new Date(schedule.date).toDateString()
           );
 
-          return scheduleAppointments.map(appointment => ({
-            title: `Appointment ID: ${appointment.appointment_id}`,
-            start: new Date(appointment.date_appointment),
-            end: new Date(appointment.date_appointment), // Both start and end are the same
-            allDay: true, // Make it an all-day event
-          }));
+          return scheduleAppointments.map(appointment => {
+            const service = services.find(service => service.service_id === appointment.service_id);
+
+            return {
+              title: appointment.user_fullname, // Display full name
+              start: new Date(appointment.date_appointment),
+              end: new Date(appointment.date_appointment), // Both start and end are the same
+              allDay: true, // Make it an all-day event para walang time
+              service_name: service.service_name, // Add service name
+              appointment_id: appointment.appointment_id // You need to put this to know what appointment ID it is.
+            };
+          });
         });
 
         setEvents(calendarEvents);
@@ -54,53 +75,52 @@ const Events = () => {
       }
     };
 
+    fetchServices();
     fetchSchedulesAndAppointments();
-  }, []);
+  }, [services]); // Add services as a dependency
 
   const handleSelectSlot = (slotInfo) => {
-    setShowModal(true);
-    setSelectedDate(slotInfo.start);
-    setSelectEvent(null);
+    const eventsOnSelectedDate = events.filter(event =>
+      new Date(event.start).toDateString() === slotInfo.start.toDateString()
+    );
+
+    if (eventsOnSelectedDate.length > 0) {
+      setShowModal(true);
+      setSelectedDate(slotInfo.start);
+      setSelectEvent(eventsOnSelectedDate[0]);
+      setFullName(eventsOnSelectedDate[0].title);
+      setServiceName(eventsOnSelectedDate[0].service_name); // Set service name
+    } else {
+      setShowModal(false);
+    }
   };
 
   const handleSelectedEvent = (event) => {
     setShowModal(true);
     setSelectEvent(event);
-    setEventTitle(event.title);
+    setFullName(event.title);
+    setServiceName(event.service_name); // Set service name
   };
 
-  const saveEvent = () => {
-    if (eventTitle && selectedDate) {
-      if (selectEvent) {
-        const updatedEvent = { ...selectEvent, title: eventTitle };
-        const updatedEvents = events.map((event) =>
-          event === selectEvent ? updatedEvent : event
-        );
-        setEvents(updatedEvents);
-      } else {
-        const newEvent = {
-          title: eventTitle,
-          start: selectedDate,
-          end: selectedDate,
-          allDay: true,
-        };
-        setEvents([...events, newEvent]);
-      }
-      setShowModal(false);
-      setEventTitle("");
-      setSelectEvent(null);
-    }
-  };
+  async function CompleteAppointment() {
 
-  const deleteEvents = () => {
-    if (selectEvent) {
-      const updatedEvents = events.filter((event) => event !== selectEvent);
-      setEvents(updatedEvents);
-      setShowModal(false);
-      setEventTitle('');
-      setSelectEvent(null);
+    try {
+      const token = getToken();
+      await axiosInstance.put(
+        `/api/Appointment/CompleteStatus/${selectEvent.appointment_id}`, {}, // Empty object for request body
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      alert("Appointment Complete Successfully");
+
+      setShowModal(false); // Close modal after completion
+    } catch (err) {
+      alert("Error: " + err.message);
     }
   }
+
+  
 
   return (
     <div style={{ height: "500px" }}>
@@ -132,46 +152,50 @@ const Events = () => {
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">
-                  {selectEvent ? "Edit Event" : "Add Event"}
+                  {"Appointment"}
                 </h5>
                 <button
                   type="button"
                   className="btn-close"
                   onClick={() => {
                     setShowModal(false);
-                    setEventTitle("");
+                    setFullName("");
                     setSelectEvent(null);
+                    setServiceName(""); // Clear service name
                   }}
                 ></button>
               </div>
               <div className="modal-body">
-                <label htmlFor="eventTitle" className="form-label">
-                  Event Title:
+                <label htmlFor="fullName" className="form-label">
+                  Full Name:
                 </label>
                 <input
                   type="text"
                   className="form-control"
-                  id="eventTitle"
-                  value={eventTitle}
-                  onChange={(e) => setEventTitle(e.target.value)}
+                  id="fullName"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  readOnly
+                />
+                <label htmlFor="serviceName" className="form-label mt-3">
+                  Service Name:
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="serviceName"
+                  value={serviceName} // Display service name
+                  readOnly
                 />
               </div>
+
               <div className="modal-footer">
-                {selectEvent && (
-                  <button 
-                    type="button"
-                    className="btn btn-danger me-2"
-                    onClick={deleteEvents}
-                  >
-                    Delete Event
-                  </button>
-                )}
                 <button
                   type="button"
                   className="btn btn-primary"
-                  onClick={saveEvent}
+                   onClick={CompleteAppointment}
                 >
-                  Save
+                  Complete
                 </button>
               </div>
             </div>
