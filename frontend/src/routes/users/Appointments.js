@@ -6,6 +6,30 @@ import axiosInstance from "../../api/axiosInstance"; // Code for base URL
 
 const localizer = momentLocalizer(moment);
 
+// Custom toolbar component for the buttons
+const CustomToolbar = (toolbar) => {
+  const goToNext = () => {
+    toolbar.onNavigate("NEXT");
+  };
+
+  const goToToday = () => {
+    toolbar.onNavigate("TODAY");
+  };
+
+  return (
+    <div className="rbc-toolbar">
+      <span className="rbc-btn-group">
+        <button type="button" onClick={goToToday}>
+          Today
+        </button>
+        <button type="button" onClick={goToNext}>
+          Next
+        </button>
+      </span>
+      <span className="rbc-toolbar-label">{toolbar.label}</span>
+    </div>
+  );
+};
 const Appointments = () => {
   const [events, setEvents] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -74,15 +98,19 @@ const Appointments = () => {
   };
 
   const handleSelectedEvent = (event) => {
-    // Check if the event is clickable before showing the modal
-    if (event.isClickable) {
+    const today = moment().startOf('day'); // Get today's date with time set to 00:00:00
+    const eventDate = moment(event.start).startOf('day'); // Get the event's date with time set to 00:00:00
+  
+    if (event.isClickable && eventDate.isSameOrAfter(today)) {
       setShowModal(true);
       setSelectEvent(event);
       setEventTitle(event.title);
   
       // Set the schedule ID and date_appointment from the selected event
       setScheduleID(event.schedule_id);
-      setAppointmentDate(moment(event.start).format("YYYY-MM-DD"));
+      setAppointmentDate(moment(event.start).format("YYYY-MM-DD")); //If u change this format the backend will not work so modify the date on the backend
+    } else if (eventDate.isBefore(today)) {
+      alert("Cannot select a past date.");
     } else {
       alert("This slot is fully booked and cannot be selected.");
     }
@@ -132,6 +160,7 @@ const Appointments = () => {
         onSelectSlot={handleSelectSlot}
         onSelectEvent={handleSelectedEvent}
         views={["month"]}
+        components={{ toolbar: CustomToolbar }} // Use custom toolbar
       />
 
       {showModal && (
