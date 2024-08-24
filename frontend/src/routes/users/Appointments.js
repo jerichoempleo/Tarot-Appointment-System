@@ -23,7 +23,8 @@ const Appointments = () => {
 
   // Helper function to get JWT token
   const getToken = () => sessionStorage.getItem("jwttoken"); // jwttoken = variable in backend
-
+  
+  
   useEffect(() => {
     (async () => {
       await loadServices();
@@ -49,7 +50,7 @@ const Appointments = () => {
       const response = await axiosInstance.get("/api/Schedule/GetSchedule", {
         headers: { Authorization: `Bearer ${token}` },
       });
-
+  
       // Map schedules data to calendar events
       const mappedEvents = response.data.schedules.map((schedule) => ({
         title: `Slots: ${schedule.number_slots}`, // Display number of slots
@@ -57,8 +58,9 @@ const Appointments = () => {
         end: new Date(schedule.date), // Same start and end date for all-day event
         allDay: true, // Mark as all-day event
         schedule_id: schedule.schedule_id, // Include schedule_id for reference
+        isClickable: schedule.number_slots > 0, // Add this code to check if theres more slot
       }));
-
+  
       setEvents(mappedEvents);
     } catch (error) {
       console.error("There was an error loading the schedules!", error);
@@ -72,13 +74,18 @@ const Appointments = () => {
   };
 
   const handleSelectedEvent = (event) => {
-    setShowModal(true);
-    setSelectEvent(event);
-    setEventTitle(event.title);
-
-    // Set the schedule ID and date_appointment from the selected event
-    setScheduleID(event.schedule_id);
-    setAppointmentDate(moment(event.start).format("YYYY-MM-DD"));
+    // Check if the event is clickable before showing the modal
+    if (event.isClickable) {
+      setShowModal(true);
+      setSelectEvent(event);
+      setEventTitle(event.title);
+  
+      // Set the schedule ID and date_appointment from the selected event
+      setScheduleID(event.schedule_id);
+      setAppointmentDate(moment(event.start).format("YYYY-MM-DD"));
+    } else {
+      alert("This slot is fully booked and cannot be selected.");
+    }
   };
 
   async function save(event) {

@@ -23,6 +23,9 @@ import CompleteAppointment from "./routes/admins/CompleteAppointment.js";
 import "./App.css";
 import Events from "./routes/admins/Events.js";
 
+import ProtectedRoute from "./components/ProtectedRoute"; // Import ProtectedRoute component
+
+
 
 const AppLayout = () => (
   <>
@@ -32,52 +35,79 @@ const AppLayout = () => (
 );
 
 const router = createBrowserRouter([
-  //Without Sidebar
+  // Routes that do not require authentication
   {
     path: "/",
-    element: <Login />, //Path for the Initial Page (Pag nirun ung program)
+    element: <Login />,
   },
   {
     path: "register",
     element: <Register />,
   },
-
-  //This Section is part of the Sidebar
+  // Protected routes that require authentication and roles
   {
     path: "",
-    element: <AppLayout />,
+    element: <ProtectedRoute allowedRoles={["User", "Admin"]} />, // Allow both User and Admin roles
     children: [
       {
-        path: "home",
-        element: <Home />,
-      },
-      {
-        path: "appointments",
-        element: <Appointments />,
-      },
-      {
-        path: "services",
-        element: <Services />,
-      },
-      {
-        path: "schedules",
-        element: <Schedules />,
-      },
-      {
-        path: "transactionhistory",
-        element: <TransacHistory />,
-      },
-      {
-        path: "pendingappointment",
-        element: <PendingAppointment />,
-      },
-      {
-        path: "completeappointment",
-        element: <CompleteAppointment />,
-      },
-      {
-        path: "events",
-        element: <Events />,
+        path: "",
+        element: <AppLayout />,
+        children: [
+          {
+            path: "home",
+            element: <Home />,
+          },
+          {
+            path: "services",
+            element: <ProtectedRoute allowedRoles={["Admin"]} />, 
+            children: [
+              { path: "", element: <Services /> },  // path: "" = default component sa url
+            ]
+          },
+
+          {
+            path: "appointments",
+            element: <ProtectedRoute allowedRoles={["User"]} />, 
+            children: [
+              { path: "", element: <Appointments /> },
+            ]
+          },
+          {
+            path: "schedules",
+            element: <ProtectedRoute allowedRoles={["Admin"]} />, 
+            children: [
+              { path: "", element: <Schedules /> },
+            ]
+          },
+          {
+            path: "transactionhistory",
+            element: <ProtectedRoute allowedRoles={["User"]} />,
+            children: [
+              { path: "", element: <TransacHistory /> },
+            ]
+          },
+          {
+            path: "pendingappointment",
+            element: <ProtectedRoute allowedRoles={["Admin"]} />, 
+            children: [
+              { path: "", element: <PendingAppointment /> },
+            ]
+          },
+          {
+            path: "completeappointment",
+            element: <ProtectedRoute allowedRoles={["Admin"]} />, 
+            children: [
+              { path: "", element: <CompleteAppointment /> },
+            ]
+          },
+          {
+            path: "events",
+            element: <ProtectedRoute allowedRoles={["Admin"]} />, 
+            children: [
+              { path: "", element: <Events /> },
+            ]
+          },
+        ],
       },
     ],
   },

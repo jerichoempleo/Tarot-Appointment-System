@@ -8,7 +8,7 @@ using TarotAppointment.Models;
 
 namespace TarotAppointment.Controllers
 {
-    [Authorize] //The need to use for token
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AppointmentController : ControllerBase
@@ -140,8 +140,10 @@ namespace TarotAppointment.Controllers
             return Ok("Appointment status updated to complete.");
         }
 
+       
         [HttpGet]
         [Route("GetPendingAppointment")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetPendingAppointments()
         {
             // Get the user ID from the current authenticated user's claims

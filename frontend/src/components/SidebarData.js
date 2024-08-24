@@ -8,7 +8,7 @@ export const getSidebarData = () => {
   const roles = sessionStorage.getItem('roles'); // Check in the Application inspect to get the users role
 
   const allItems = [
-      { title: "Home", path: "/home", icon: <AiIcons.AiFillHome />, cName: "nav-text", roles: ["User", "Admin"] },
+      { title: "Home", path: "/home", icon: <AiIcons.AiFillHome />, cName: "nav-text", roles: ["User", "Admin"] }, //Dont forget the quotation mark is adding new role
       { title: "Appointments", path: "/appointments", icon: <IoIcons.IoMdPeople />, cName: "nav-text", roles: ["User"] },
       { title: "Schedules", path: "/schedules", icon: <FaIcons.FaEnvelopeOpenText />, cName: "nav-text", roles: ["Admin"] },
       { title: "Services", path: "/services", icon: <IoIcons.IoMdHelpCircle />, cName: "nav-text", roles: ["Admin"] },

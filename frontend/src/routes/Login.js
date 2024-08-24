@@ -17,45 +17,47 @@ sessionStorage.clear();
     const ProceedLoginusingAPI = (e) => {
         e.preventDefault();
         if (validate()) {
-            ///implentation
-            let inputobj={"email": email,
-            "password": password};
-            fetch("https://localhost:7160/api/Account/login",{
-                method:'POST',
-                headers:{'content-type':'application/json'},
-                body:JSON.stringify(inputobj)
+            let inputobj = {
+                "email": email,
+                "password": password
+            };
+            fetch("https://localhost:7160/api/Account/login", {
+                method: 'POST',
+                headers: { 'content-type': 'application/json' },
+                body: JSON.stringify(inputobj)
             }).then((res) => {
                 return res.json();
             }).then((resp) => {
-                console.log(resp)
-                if (Object.keys(resp).length === 0) {
-                    toast.error('Login failed, invalid credentials');
-                }else{
-                     toast.success('Success');
-                     sessionStorage.setItem('email',email);
-                     sessionStorage.setItem('jwttoken',resp.token); //the .token is from the variable holder of the token named "token"
-                     sessionStorage.setItem('roles', resp.roles); //"roles" got from the login method in AccountController 
+                console.log(resp);
+                if (resp && resp.token) {
+                    sessionStorage.setItem('email', email);
+                    sessionStorage.setItem('jwttoken', resp.token); //the .token is from the variable holder of the token named "token"
+                    sessionStorage.setItem('roles', resp.roles); //"roles" got from the login method in AccountController 
 
-                     usenavigate('/home') //Redirect after logging in
+                    usenavigate('/appointments'); //Redirect after logging in
+                } else {
+                    alert('Login failed, invalid credentials');
                 }
-
             }).catch((err) => {
-                toast.error('Login Failed due to :' + err.message);
+                alert('Login Failed due to: ' + err.message);
             });
         }
     }
+
+
     const validate = () => {
         let result = true;
         if (email === '' || email === null) {
             result = false;
-            toast.warning('Please Enter Email');
+            alert('Please Enter Email');
         }
         if (password === '' || password === null) {
             result = false;
-            toast.warning('Please Enter Password');
+            alert('Please Enter Password');
         }
         return result;
     }
+
     return (
         <div className="row">
             <div className="offset-lg-3 col-lg-6" style={{ marginTop: '100px' }}>
