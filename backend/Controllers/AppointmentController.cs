@@ -21,6 +21,7 @@ namespace TarotAppointment.Controllers
 
         [HttpPost]
         [Route("AddAppointment")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> AddAppointment([FromBody] AppointmentDto appointmentDto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -118,6 +119,7 @@ namespace TarotAppointment.Controllers
         // CompleteStatus method to update the status to 1
         [HttpPut]
         [Route("CompleteStatus/{appointmentId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CompleteStatus(int appointmentId)
         {
             // Find the appointment by appointmentId
@@ -181,6 +183,7 @@ namespace TarotAppointment.Controllers
 
         [HttpGet]
         [Route("GetCompleteAppointment")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetCompleteAppointments()
         {
             // Get the user ID from the current authenticated user's claims

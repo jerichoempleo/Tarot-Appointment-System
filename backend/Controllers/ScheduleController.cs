@@ -21,6 +21,7 @@ namespace TarotAppointment.Controllers
 
         [HttpGet]
         [Route("GetSchedule")]
+        [Authorize(Roles = "User, Admin")] //No need double quote for each role
         public async Task<IActionResult> GetSchedules()
         {
             // Get the user ID from the current authenticated user's claims
@@ -51,6 +52,7 @@ namespace TarotAppointment.Controllers
 
         [HttpPost]
         [Route("AddSchedule")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddSchedule([FromBody] ScheduleDto scheduleDto)
         {
             // This code is getting the user_id through the login token
@@ -93,6 +95,7 @@ namespace TarotAppointment.Controllers
 
         [HttpPatch]
         [Route("UpdateSchedule/{schedule_id}")] //URL
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateSchedule(int schedule_id, [FromBody] ScheduleDto scheduleDto)
         {
             // Retrieve the current authenticated user's ID from the claims
@@ -131,6 +134,7 @@ namespace TarotAppointment.Controllers
 
         [HttpDelete]
         [Route("DeleteSchedule/{schedule_id}")] // This adds a URL name
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteSchedule(int schedule_id)
         {
             // Retrieve the current authenticated user's ID from the claims

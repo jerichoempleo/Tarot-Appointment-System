@@ -21,6 +21,7 @@ namespace TarotAppointment.Controllers
 
         [HttpGet]
         [Route("GetService")]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> GetServices()
         {
             // Get the user ID from the current authenticated user's claims
@@ -52,6 +53,7 @@ namespace TarotAppointment.Controllers
 
         [HttpPost]
         [Route("AddService")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddService([FromBody] ServiceDto serviceDto)
         {
             // This code is getting the user_id through the login token
@@ -96,6 +98,7 @@ namespace TarotAppointment.Controllers
 
         [HttpPatch]
         [Route("UpdateService/{service_id}")] //URL
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateService(int service_id, [FromBody] ServiceDto serviceDto)
         {
             // Retrieve the current authenticated user's ID from the claims
@@ -135,6 +138,7 @@ namespace TarotAppointment.Controllers
 
         [HttpDelete]
         [Route("DeleteService/{service_id}")] // This adds a URL name
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteService(int service_id)
         {
             // Retrieve the current authenticated user's ID from the claims
